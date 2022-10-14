@@ -3,6 +3,8 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
+// * TODO ITEM CHECKLIST
+
 export default function TodoItem() {
   const router = useRouter();
   const { slug } = router.query;
