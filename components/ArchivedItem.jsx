@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function ArchivedItem({ title, index }) {
+export default function ArchivedItem({ title, index, date, handleDelete,handleUnarchive }) {
   const iconSize = 20;
   return (
     <div className="archivetodoItem">
@@ -14,16 +14,18 @@ export default function ArchivedItem({ title, index }) {
             src="/svg/tasks-alt.svg"
             alt="date"
           />
-          <p>27-05-2022</p>
+          <p>{date}</p>
         </div>
         <div className="buttons">
           <Image
+            onClick={() => handleUnarchive(index)}
             width={iconSize}
             height={iconSize}
             src="/svg/archive.svg"
             alt="archive todo"
           />
           <Image
+            onClick={() => handleDelete(index)}
             width={iconSize}
             height={iconSize}
             src="/svg/delete-alt.svg"
@@ -31,13 +33,11 @@ export default function ArchivedItem({ title, index }) {
           />
         </div>
       </div>
-      <Link href={`/archives/${index=4}`}>
         <div className="todoItem_Bottom">
-            <div className="totdoTitle">
-            <p>Build a new app</p>
-            </div>
+          <div className="totdoTitle">
+            <p>{title}</p>
+          </div>
         </div>
-      </Link>
     </div>
   );
 }

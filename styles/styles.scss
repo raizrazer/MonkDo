@@ -1,4 +1,3 @@
-
 // Media Query Screen Size Variables
 $tab: 650px;
 $computer: 900px;
@@ -105,7 +104,7 @@ img {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      a{
+      a {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -139,6 +138,9 @@ img {
 // MAIN CONTENT
 .main {
   padding: $generalPadding;
+}
+.main.notop {
+  padding-top: 0.5rem;
 }
 
 // Just Padding
@@ -277,7 +279,7 @@ img {
   position: absolute;
   background-color: $backgroundColor;
   left: 0px;
-  top: 1rem;
+  top: 0.5rem;
   padding: 2px 15px;
   width: fit-content;
   border-right: $__borderstyle;
@@ -286,11 +288,11 @@ img {
   border-left: none;
   border-top-right-radius: $mainRadius;
   border-bottom-right-radius: $mainRadius;
-  
-  a{
+
+  a {
     display: flex;
     justify-content: center;
-    align-items: center;  
+    align-items: center;
   }
   user-select: none;
   cursor: pointer;
@@ -323,6 +325,9 @@ img {
       .rightside {
         display: flex;
         gap: 1.5rem;
+        font-weight: 600;
+        font-size: 12px;
+        color: $backgroundColor;
         .buttons {
           display: flex;
           gap: 1rem;
@@ -377,6 +382,7 @@ img {
       }
 
       .taskItem {
+        transition: opacity 200ms, filter 200ms;
         background-color: $backgroundColor;
         display: flex;
         flex-direction: row;
@@ -412,10 +418,15 @@ img {
           filter: $darkColorSvg;
         }
       }
+      .taskItem.active {
+        opacity: 60%;
+        filter: invert(0.1);
+        text-decoration: line-through;
+      }
     }
   }
 }
-.archivetodoList{
+.archivetodoList {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
