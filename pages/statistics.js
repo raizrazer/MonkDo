@@ -46,12 +46,24 @@ export default function Statistics() {
   };
   const ratioArchivevsMain = () => {
     const ratio = todosMain.length / archivedMain.length;
-    return ratio;
+    return (ratio===Infinity ? 0 : ratio )
   };
   const totalnumberOfTodos = () => {
     const total = todosMain.length;
-    console.log(total);
+    let totalLength = 0;
+    let completed = 0;
+    todosMain.forEach(item => {
+      const filtered = item.data.filter(element => (element));
+      totalLength = totalLength + filtered.length;
+    })
+    todosMain.forEach(item => {
+      const filtered = item.data.filter(element => (element.done === true));
+      completed = completed + filtered.length;
+    })
+    return ([completed,totalLength])
   };
+
+  todosMain && console.log(totalnumberOfTodos())
 
   if (ctx) {
     const monkDovsArchiveChart = new Chart(ctx, {
@@ -80,6 +92,7 @@ export default function Statistics() {
         },
       },
     });
+    // monkDovsArchiveChart.destroy();
   }
 
   return (
@@ -99,7 +112,9 @@ export default function Statistics() {
       <br></br>
       Ratio of MonkDo/Archived: {todosMain && ratioArchivevsMain()}
       <br></br>
-      Number of MonkDos: {todosMain && totalnumberOfTodos()}
+      Number of MonkDos completed: {todosMain && totalnumberOfTodos()[0]}
+      <br></br>
+      Number of Total MonkDos: {todosMain && totalnumberOfTodos()[1]}
     </Layout>
   );
 }

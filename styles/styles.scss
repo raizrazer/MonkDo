@@ -163,7 +163,6 @@ img {
 // MAIN CONTENT CLASS
 .content {
   width: 100vw;
-  min-width: 300px;
   @media screen and (min-width: $tab) {
     width: 80vw;
   }
