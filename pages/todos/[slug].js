@@ -162,6 +162,7 @@ export default function TodoItem() {
                   name="createtodo"
                   id="createTask"
                   placeholder="Type the task..."
+                  autoComplete="off"
                   value={todoInputValue}
                   onChange={(e) => {
                     setTodoInputValue(e.target.value);

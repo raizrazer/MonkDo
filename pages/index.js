@@ -7,9 +7,10 @@ export default function Home() {
   const router = useRouter()
   const iconSize = 20;
   // * Getting Input from the Create A Todo
-  const [createTodoTitle,setCreateTodoTitle] = useState("")
+  const [createTodoTitle,setCreateTodoTitle] = useState("");
   // * Storing the Main Todo List in a State
-  const [todosMain,setTodosMain] = useState()
+  const [todosMain,setTodosMain] = useState();
+  const [emptyScreenText,setEmptyScreenText] = useState();
 
   //! Runs on the first time of load.
   useEffect(() => {
@@ -62,9 +63,8 @@ export default function Home() {
 
   //* HANDLES THE SUMBIT of CREATE A TODO
   const handleClick = (e) => {
-    if(e.key === "Enter"){
+    if(e.key === "Enter" || e.target.alt === "add"){
       if(createTodoTitle !== ""){
-        setCreateTodoTitle("")
         const date = new Date()
         // ? MAIN VALUE of the input creation
         const inputValue = {
@@ -81,6 +81,7 @@ export default function Home() {
         const gotoIndex = todoList.length;
         todoList.push(inputValue)
         localStorage.setItem('todosMain',JSON.stringify(todoList));
+        setCreateTodoTitle("")
         router.push(`/todos/${gotoIndex}`)
       }
     }
@@ -99,6 +100,10 @@ export default function Home() {
     return arrayOfHappyText[randomValue];
   }
 
+  useEffect(()=>{
+    setEmptyScreenText(showRandomText());
+  },[])
+
   return (
     <Layout>
       <div className="your-todos">
@@ -116,7 +121,7 @@ export default function Home() {
             onKeyDown={handleClick}
             autoComplete="off"
           />
-          <img src="/svg/ui-add.svg" width={iconSize} height={iconSize} alt="add"></img>
+          <img onClick={handleClick} src="/svg/ui-add.svg" width={iconSize} height={iconSize} alt="add"></img>
         </div>
 
         <div className="todoList">
@@ -127,8 +132,8 @@ export default function Home() {
           
           {todosMain ? todosMain.map((todoItem,index) => {
             return <MainTodoItem key={index} index={index} handleDelete={handleDelete} handleArchive={handleArchive} title={todoItem.title} date={`[${
-              todoItem.hour > 12
-                ? `0${todoItem.hour.toString()}`
+              (todoItem.hour > 12 && (todoItem.hour%12) <10 )
+                ? `0${(todoItem.hour%12).toString()}`
                 : `0${todoItem.hour.toString()}`
             }:${
               todoItem.minute < 10
@@ -136,13 +141,12 @@ export default function Home() {
                 : todoItem.minute
             } ${todoItem.hour > 12 ? `PM` : `AM`}] [${todoItem.day}-${todoItem.month}-${todoItem.year}]`}/>
           }) : `Loading`}
+        </div>
           {todosMain && todosMain.length ===0 ? 
           <div className="text-xl text-center px-10 md:px-5">
-            {showRandomText()}
+            {emptyScreenText}
           </div>
           : ``}
-        </div>
-
       </div>
     </Layout>
   );
